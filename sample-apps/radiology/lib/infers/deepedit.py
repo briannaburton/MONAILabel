@@ -29,6 +29,7 @@ from monai.transforms import (
     ScaleIntensityRanged,
     SqueezeDimd,
     ToNumpyd,
+    NormalizeIntensityd,
 )
 
 from monailabel.interfaces.tasks.infer_v2 import InferType
@@ -77,7 +78,8 @@ class DeepEdit(BasicInferTask):
             LoadImaged(keys="image", reader="ITKReader"),
             EnsureChannelFirstd(keys="image"),
             Orientationd(keys="image", axcodes="RAS"),
-            ScaleIntensityRanged(keys="image", a_min=-175, a_max=250, b_min=0.0, b_max=1.0, clip=True),
+            NormalizeIntensityd(keys="image", nonzero=True),
+            # ScaleIntensityRanged(keys="image", a_min=-175, a_max=250, b_min=0.0, b_max=1.0, clip=True),
         ]
 
         self.add_cache_transform(t, data)

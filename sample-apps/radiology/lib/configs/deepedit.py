@@ -40,13 +40,11 @@ class DeepEdit(TaskConfig):
 
         # Multilabel
         self.labels = {
-            "spleen": 1,
-            "right kidney": 2,
-            "left kidney": 3,
-            "liver": 6,
-            "stomach": 7,
-            "aorta": 8,
-            "inferior vena cava": 9,
+            "tibia": 1,
+            "fibula": 2,
+            "calcaneus": 3,
+            "talus": 4,
+            "navicular": 5,
             "background": 0,
         }
 

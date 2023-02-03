@@ -39,6 +39,7 @@ from monai.transforms import (
     SelectItemsd,
     ToNumpyd,
     ToTensord,
+    NormalizeIntensityd,
 )
 
 from monailabel.deepedit.handlers import TensorBoardImageHandler
@@ -105,7 +106,8 @@ class DeepEdit(BasicTrainTask):
             NormalizeLabelsInDatasetd(keys="label", label_names=self._labels),
             Orientationd(keys=["image", "label"], axcodes="RAS"),
             # This transform may not work well for MR images
-            ScaleIntensityRanged(keys="image", a_min=-175, a_max=250, b_min=0.0, b_max=1.0, clip=True),
+            NormalizeIntensityd(keys="image", nonzero=True),
+            # ScaleIntensityRanged(keys="image", a_min=-175, a_max=250, b_min=0.0, b_max=1.0, clip=True),
             RandFlipd(keys=("image", "label"), spatial_axis=[0], prob=0.10),
             RandFlipd(keys=("image", "label"), spatial_axis=[1], prob=0.10),
             RandFlipd(keys=("image", "label"), spatial_axis=[2], prob=0.10),
@@ -139,7 +141,8 @@ class DeepEdit(BasicTrainTask):
             NormalizeLabelsInDatasetd(keys="label", label_names=self._labels),
             Orientationd(keys=["image", "label"], axcodes="RAS"),
             # This transform may not work well for MR images
-            ScaleIntensityRanged(keys=("image"), a_min=-175, a_max=250, b_min=0.0, b_max=1.0, clip=True),
+            NormalizeIntensityd(keys="image", nonzero=True),
+            # ScaleIntensityRanged(keys=("image"), a_min=-175, a_max=250, b_min=0.0, b_max=1.0, clip=True),
             Resized(keys=("image", "label"), spatial_size=self.spatial_size, mode=("area", "nearest")),
             # Transforms for click simulation
             FindAllValidSlicesMissingLabelsd(keys="label", sids="sids"),

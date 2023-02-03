@@ -78,6 +78,8 @@ class Segmentation(BasicInferTask):
             overlap=0.4,
             padding_mode="replicate",
             mode="gaussian",
+            sw_device='cuda',
+            device='cpu',
         )
 
     def inverse_transforms(self, data=None):
